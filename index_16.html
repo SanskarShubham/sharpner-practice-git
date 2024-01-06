@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body style="margin: 0">
+    <form onsubmit="handleFormSubmit(event)">
+      <label for="username">Username</label>
+      <input type="text" name="username" id="username" />
+      <label for="email">Email</label>
+      <input type="email" name="email" id="email" />
+      <label for="phone">Phone No</label>
+      <input type="tel" name="phone" id="phone" />
+      <button type="submit">Submit</button>
+    </form>
+    <ul id="userList"></ul>
+
+    <script>
+      function handleFormSubmit(event) {
+        event.preventDefault();
+
+        // Get form values
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+
+        // Check if the email is already stored
+        const existingUser = localStorage.getItem(email);
+
+        if (existingUser) {
+          alert("User with this email already exists!");
+          return;
+        }
+
+        // Save user data to local storage using email as the key
+        const userData = {
+          username: username,
+          email: email,
+          phone: phone,
+        };
+        localStorage.setItem(email, JSON.stringify(userData));
+
+        // Display the user in the unordered list
+        displayUser(username, email, phone);
+
+        // Clear the form fields
+        document.getElementById("username").value = "";
+        document.getElementById("email").value = "";
+        document.getElementById("phone").value = "";
+      }
+
+      function displayUser(username, email, phone) {
+        // Create a new list item
+        const listItem = document.createElement("li");
+
+        // Set the text content of the list item
+        listItem.textContent = `${username} - ${email} - ${phone}`;
+
+        // Create delete button
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.addEventListener("click", function () {
+          // Remove user from the screen and local storage
+          listItem.remove();
+          localStorage.removeItem(email);
+        });
+
+        // Create edit button
+        const editButton = document.createElement("button");
+        editButton.textContent = "Edit";
+        editButton.addEventListener("click", function () {
+          // Remove user from the screen and local storage
+          listItem.remove();
+          localStorage.removeItem(email);
+
+          // Populate form fields with existing values
+          document.getElementById("username").value = username;
+          document.getElementById("email").value = email;
+          document.getElementById("phone").value = phone;
+        });
+
+        // Append buttons to the list item
+        listItem.appendChild(deleteButton);
+        listItem.appendChild(editButton);
+
+        // Append the list item to the unordered list
+        document.getElementById("userList").appendChild(listItem);
+      }
+    </script>
+  </body>
+</html>
