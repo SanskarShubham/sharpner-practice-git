@@ -1,10 +1,13 @@
-const http  = require('http');
-const routes  = require('./routes');
 
-//  console.log("server has started.");
-// const server = http.createServer(routes.handler);
-const server = http.createServer(routes);
+const express  = require('express');
 
-// Start the server
-server.listen(3000);
-// http://localhost:3000/
+const app = express();
+
+app.use((req,res,next)=>{
+        console.log('test');
+        next();
+})
+app.use((req,res,next)=>{
+        res.send('<h1> welcome to express js</>');
+})
+app.listen(3000);
