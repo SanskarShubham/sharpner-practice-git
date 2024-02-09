@@ -1,8 +1,8 @@
 const express = require('express');
-
+const router = express.Router();
 const productController = require('../controller/product') 
 
-const router = express.Router();
+
 
 
 // /admin/add-product => GET
