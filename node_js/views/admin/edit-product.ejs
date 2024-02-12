@@ -6,7 +6,7 @@
 <body>
    <%- include('../includes/navigation.ejs') %>
 
-    <main>
+    <main>  
         <form class="product-form" action="/admin/<%= (editing === 'true')?'edit-product':'add-product' %>" method="POST">
             <div class="form-control">
                 <label for="title">Title</label>
